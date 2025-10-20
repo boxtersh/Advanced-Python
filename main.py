@@ -14,7 +14,7 @@ def map_every(fun: Callable[[float], float], lst: list, ind: int) -> list:
 
 
 print(map_every(lambda x: x * 10, [1, 2, 3, 4, 5, 6], 2))
-'''
+
 
 # 2. Функция: sum_by(numbers, func) и vector_length(x, y, z)
 sum_by_fun = lambda x: x ** 2
@@ -38,7 +38,6 @@ def vector_length(fun: Callable[[..., float], float]) -> Callable:
     def wrapper(*args: float):
         result = fun(*args)
         return result ** 0.5
-
     return wrapper
 
 
@@ -56,3 +55,20 @@ def sum_by(fun: Callable[[float], float], *arcs: float) -> float:
         summ += fun(elm)
 
     return summ
+'''
+
+# 3. Функция: take_while(elements, func)
+sum_by_fun = lambda x: x / 2 > 2.1
+def take_while(fun: Callable[[float], float], lst:list) -> list:
+    """
+    Функция принимает произвольный список и возвращает новый в соответствии с критерием выбора
+    :param fun: Произвольная функция критерия
+    :param lst: Исходный список
+    :return: Новый список соответствующий критерию
+    """
+    new_lst = []
+    for elm in lst:
+        if fun(elm):
+            new_lst.append(elm)
+
+    return new_lst
