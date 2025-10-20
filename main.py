@@ -59,7 +59,9 @@ def sum_by(fun: Callable[[float], float], *arcs: float) -> float:
 
 # 3. Функция: take_while(elements, func)
 sum_by_fun = lambda x: x / 2 > 2.1
-def take_while(fun: Callable[[float], float], lst:list) -> list:
+
+
+def take_while(fun: Callable[[float], float], lst: list) -> list:
     """
     Функция принимает произвольный список и возвращает новый в соответствии с критерием выбора
     :param fun: Произвольная функция критерия
@@ -72,3 +74,22 @@ def take_while(fun: Callable[[float], float], lst:list) -> list:
             new_lst.append(elm)
 
     return new_lst
+
+
+# Задания на декораторы
+# Задача 1 — count_calls (подсчёт вызовов)
+def count_calls(fun: Callable[[str], None]) -> Callable:
+    count = 0
+
+    def wrapper(name: str):
+        nonlocal count
+        count += 1
+        print(f'Функция {fun.__name__} вызвана {count}раз(а)')
+        fun(name)
+
+    return wrapper
+
+
+@count_calls
+def greet(name: str) -> None:
+    print(f"Привет, {name}!\n")
