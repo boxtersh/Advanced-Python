@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any
 
 '''
 # Домашняя работа №7.1 — Практические задания
@@ -55,7 +55,7 @@ def sum_by(fun: Callable[[float], float], *arcs: float) -> float:
         summ += fun(elm)
 
     return summ
-'''
+
 
 # 3. Функция: take_while(elements, func)
 sum_by_fun = lambda x: x / 2 > 2.1
@@ -93,3 +93,28 @@ def count_calls(fun: Callable[[str], None]) -> Callable:
 @count_calls
 def greet(name: str) -> None:
     print(f"Привет, {name}!\n")
+
+'''
+# Задача 2 — type_check(*types) (проверка типов аргументов)
+def decorator_with_args(*d_args):
+    def type_check(fun: Callable[[str], None]) -> Callable:
+        def wrapper(*w_arcs: Any) -> Any:
+            len_tuple = len(d_args)
+            for i in range(len_tuple):
+                assert isinstance(w_arcs[i], d_args[
+                    i]), f'TypeError: Неверный тип аргумента N{i}: ожидался <class {d_args[i]}>, получен <class {type(w_arcs[i])}>'
+
+            result = fun(*w_arcs)
+            return result
+
+        return wrapper
+
+    return type_check
+
+
+@decorator_with_args(list, int, float, str)
+def summ(a, b, c, d):
+    print(''.join(a) + str(b) + str(c) + d)
+
+
+summ(['1', '2', '3', '4', '5'], 6, 7.1, 'python')
