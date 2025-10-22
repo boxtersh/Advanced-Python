@@ -75,11 +75,11 @@ def greet(name: str) -> None:
 # Задача 2 — type_check(*types) (проверка типов аргументов)
 def decorator_with_args(*d_args):
     def type_check(fun: Callable[[str], None]) -> Callable:
+        @wraps(fun)
         def wrapper(*w_arcs: Any) -> Any:
             len_tuple = len(d_args)
             for i in range(len_tuple):
-                assert isinstance(w_arcs[i], d_args[
-                    i]), f'TypeError: Неверный тип аргумента N{i + 1}: ожидался {d_args[i]}, получен {type(w_arcs[i])}'
+                if not isinstance(w_arcs[i], d_args[i]): raise TypeError (f'Неверный тип аргумента N{i + 1}: ожидался {d_args[i]}, получен {type(w_arcs[i])}')
             result = fun(*w_arcs)
             return result
 
