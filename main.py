@@ -11,18 +11,18 @@ def map_every(fun: Callable[[float], float], lst: list, ind: int) -> list:
         new_lst.append(fun(elm))
     return new_lst
 
-print(map_every((lambda x: x*10),  [1,2,3,4,5,6], 3))
+
+print(map_every((lambda x: x * 10), [1, 2, 3, 4, 5, 6], 3))
 
 
 # ***********************************************************************************************************
 # 2. Функция: sum_by(numbers, func) и vector_length(x, y, z)
 def sum_by(func, *arcs: float) -> float:
-
     return func(*arcs)
 
 
 def vector_length(*arcs: float) -> float:
-    result = round((sum_by(lambda x,y,z: x**2 + y**2 + z**2, *arcs))**0.5, 2)
+    result = round((sum_by(lambda x, y, z: x ** 2 + y ** 2 + z ** 2, *arcs)) ** 0.5, 2)
 
     return result
 
@@ -42,6 +42,7 @@ def take_while(fun: Callable[[float], float], lst: list) -> list:
             new_lst.append(elm)
 
     return new_lst
+
 
 # Пример вызова:
 fun_2 = lambda x: x / 2 > 2.1
@@ -99,7 +100,8 @@ def validate_range(value_min=0, value_max=100) -> Callable:
     def decorator(fun: Callable[[str], None]) -> Callable:
         def wrapper(*args) -> Union[int, float]:
             for elm in args:
-                assert isinstance(elm,(int, float)), f"TypeError: ожидался тип <class 'int, float'>, получили {type(elm)}"
+                assert isinstance(elm,
+                                  (int, float)), f"TypeError: ожидался тип <class 'int, float'>, получили {type(elm)}"
                 assert elm >= value_min and elm <= value_max, f'ValueError: значение {elm} не соответствует диапазону {value_min}<=значение<={value_max}'
             result = fun(*args)
             return result
