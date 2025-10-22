@@ -1,4 +1,5 @@
 from typing import Callable, Any, Union
+from functools import wraps
 
 
 # Домашняя работа №7.1 — Практические задания
@@ -55,6 +56,7 @@ print(take_while(fun_2, [1, 2, 3, 4, 5, 6]))
 def count_calls(fun: Callable[[str], None]) -> Callable:
     count = 0
 
+    @wraps(fun)
     def wrapper(name: str):
         nonlocal count
         count += 1
