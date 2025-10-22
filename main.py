@@ -79,7 +79,8 @@ def decorator_with_args(*d_args):
         def wrapper(*w_arcs: Any) -> Any:
             len_tuple = len(d_args)
             for i in range(len_tuple):
-                if not isinstance(w_arcs[i], d_args[i]): raise TypeError (f'Неверный тип аргумента N{i + 1}: ожидался {d_args[i]}, получен {type(w_arcs[i])}')
+                if not isinstance(w_arcs[i], d_args[i]): raise TypeError(
+                    f'Неверный тип аргумента N{i + 1}: ожидался {d_args[i]}, получен {type(w_arcs[i])}')
             result = fun(*w_arcs)
             return result
 
@@ -100,11 +101,13 @@ summ(['1', '2', '3', '4', '5'], 6, 7.3, 'python')
 # Задача 3 — validate_range(min_value, max_value) (проверка диапазона)
 def validate_range(value_min=0, value_max=100) -> Callable:
     def decorator(fun: Callable[[str], None]) -> Callable:
-        def wrapper(*args) -> Union[int, float]:
+        @wraps(fun)
+        def wrapper(*args) -> None:
             for elm in args:
-                assert isinstance(elm,
-                                  (int, float)), f"TypeError: ожидался тип <class 'int, float'>, получили {type(elm)}"
-                assert elm >= value_min and elm <= value_max, f'ValueError: значение {elm} не соответствует диапазону {value_min}<=значение<={value_max}'
+                if not isinstance(elm, (int, float)): raise TypeError(
+                    f"ожидался тип <class 'int, float'>, получили {type(elm)}")
+                if elm <= value_min or elm >= value_max: raise ValueError(
+                    f'значение {elm} не соответствует диапазону {value_min}<=значение<={value_max}')
             result = fun(*args)
             return result
 
@@ -119,4 +122,4 @@ def set_percentage(value: Union[int, float]):
 
 
 # Пример вызова:
-set_percentage(-1)
+set_percentage(13.7)
