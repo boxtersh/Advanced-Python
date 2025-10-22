@@ -19,11 +19,16 @@ print(map_every((lambda x: x * 10), [1, 2, 3, 4, 5, 6], 3))
 # ***********************************************************************************************************
 # 2. Функция: sum_by(numbers, func) и vector_length(x, y, z)
 def sum_by(func, *arcs: float) -> float:
-    return func(*arcs)
+    res = 0
+    for elm in arcs:
+        elm = func(elm)
+        res += elm
+
+    return res
 
 
 def vector_length(*arcs: float) -> float:
-    result = round((sum_by(lambda x, y, z: x ** 2 + y ** 2 + z ** 2, *arcs)) ** 0.5, 2)
+    result = round((sum_by(lambda x: x**2, *arcs)) ** 0.5, 2)
 
     return result
 
